@@ -32,7 +32,7 @@ jobs:
           app-id: ${{ secrets.SKYRAMP_TESTBOT_APP_ID }}
           private-key: ${{ secrets.SKYRAMP_TESTBOT_APP_PRIVATE_KEY }}
 
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
@@ -42,15 +42,3 @@ jobs:
           skyrampLicenseFile: ${{ secrets.SKYRAMP_LICENSE_FILE }}
           anthropicApiKey: ${{ secrets.SKYRAMP_TESTBOT_API_KEY }}
           githubToken: ${{ steps.app-token.outputs.token }}
-          autoCommit: 'true'
-          skyrampMcpVersion: v0.1.6
-          skyrampExecutorVersion: v1.3.23
-          targetSetupCommand: 'docker compose -f docker-compose.testbot.yml up -d'
-          targetTeardownCommand: 'docker compose -f docker-compose.testbot.yml down -v'
-          targetReadyCheckCommand: 'curl -sf http://localhost:8055/server/health'
-          targetReadyCheckTimeout: '300'
-          authTokenCommand: >
-            curl -sf -X POST http://localhost:8055/auth/login
-            -H 'Content-Type: application/json'
-            -d '{"email":"admin@example.com","password":"admin"}'
-            | jq -r '.data.access_token'
